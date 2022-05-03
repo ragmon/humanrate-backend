@@ -6,25 +6,41 @@
 ./install-all.bash
 ```
 
-## Установка (ручная)
+[//]: # (## Установка &#40;ручная&#41;)
 
-1. Установить git submodule
-```
-git submodule update --init --recursive
-cp laradock.env laradock/.env
-```
-2. Развернуть docker среду (среда будет собираться долго. нужно набраться терпения)
-```
-cd laradock
-cp .env.example .env
-sudo ./up.bash
+[//]: # ()
+[//]: # (1. Установить git submodule)
 
-# установить зависимости
-sudo ./composer-install.bash
-# развернуть БД миграции  
-sudo ./migrate.bash
-```
-3. Перейти на http://localhost и увидеть `Lumen (9.0.2) (Laravel Components ^9.0)`
+[//]: # (```)
+
+[//]: # (git submodule update --init --recursive)
+
+[//]: # (cp laradock.env laradock/.env)
+
+[//]: # (```)
+
+[//]: # (2. Развернуть docker среду &#40;среда будет собираться долго. нужно набраться терпения&#41;)
+
+[//]: # (```)
+
+[//]: # (cd laradock)
+
+[//]: # (cp .env.example .env)
+
+[//]: # (sudo ./up.bash)
+
+[//]: # ()
+[//]: # (# установить зависимости)
+
+[//]: # (sudo ./composer-install.bash)
+
+[//]: # (# развернуть БД миграции  )
+
+[//]: # (sudo ./migrate.bash)
+
+[//]: # (```)
+
+[//]: # (3. Перейти на http://localhost и увидеть `Lumen &#40;9.0.2&#41; &#40;Laravel Components ^9.0&#41;`)
 
 ## Использование
 
