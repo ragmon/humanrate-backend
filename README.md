@@ -1,18 +1,30 @@
-# Оценка людей backend
+# Human rating (API)
 
-## Установка
+## Установка (автоматическая)
+1. Выполнить скрипт
+```
+./install-all.bash
+```
+
+## Установка (ручная)
 
 1. Установить git submodule
 ```
 git submodule update --init --recursive
+cp laradock.env laradock/.env
 ```
 2. Развернуть docker среду (среда будет собираться долго. нужно набраться терпения)
 ```
 cd laradock
 cp .env.example .env
-sudo docker-compose up -d nginx mysql
+sudo ./up.bash
+
+# установить зависимости
+sudo ./composer-install.bash
+# развернуть БД миграции  
+sudo ./migrate.bash
 ```
-3. Перейти на http://localhost и получить 
+3. Перейти на http://localhost и увидеть `Lumen (9.0.2) (Laravel Components ^9.0)`
 
 ## Использование
 
