@@ -18,7 +18,13 @@ class ContactController extends Controller
         //
     }
 
-    public function updateContacts(Request $request)
+    /**
+     * Синхронизация контактной книжки.
+     * С приложения отправляется список всех контактов и добавляются на бэке в БД те кто не существуют или обновляются
+     * имена существующих контактов.
+     */
+    // TODO: сделать поддержку нескольких номеров телефонов для 1 контакта
+    public function syncContacts(Request $request)
     {
         $this->validate($request, [
             'contacts' => 'required|array',
@@ -30,8 +36,27 @@ class ContactController extends Controller
         $user = Auth::user();
         $contacts = $request->post('contacts');
 
-        $user->contacts()->createMany($contacts);
+        foreach ($contacts as $contact) {
+            /** @var  $contactEntity */
+            if ($contactEntity = $user->contacts()->where('phone', $contact['phone'])->first()) {
+                $contactEntity->update($contact->only(['name']));
+            } else {
+                $user->contacts()->create($contact);
+            }
+        }
 
         return response()->json();
+    }
+
+    /**
+     * Получаем список всех контактов которые были синхронизированы в БД бэка ранее
+     */
+    public function getContacts(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $contacts = $user->contacts;
+
+        return response()->json($contacts->toArray());
     }
 }

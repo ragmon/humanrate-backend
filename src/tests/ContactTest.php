@@ -16,7 +16,7 @@ class ContactTest extends TestCase
     public function test_update_contacts()
     {
         $user = User::factory()->create();
-        $contacts = Contact::factory()->count(10)->make()->toArray();
+        $contacts = Contact::factory()->count(10)->make();
 
         $response = $this->json('POST', '/api/contacts', [
             'contacts' => $contacts,
@@ -29,7 +29,28 @@ class ContactTest extends TestCase
             $this->seeInDatabase('contacts', [
                 'name' => $contact['name'],
                 'phone' => $contact['phone'],
-//                'user_id' => $user->id,
+                'user_id' => $user->id,
+            ]);
+        }
+    }
+
+    public function test_get_contacts()
+    {
+        $user = User::factory()->create();
+        $contacts = Contact::factory()->count(10)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->json('GET', '/api/contacts', [], [
+            'User-Identify' => $user->phone,
+        ]);
+
+        $response->assertResponseStatus(200);
+        foreach ($contacts as $contact) {
+            $response->seeJsonContains([
+                'name' => $contact['name'],
+                'phone' => $contact['phone'],
+                'user_id' => $user->id,
             ]);
         }
     }

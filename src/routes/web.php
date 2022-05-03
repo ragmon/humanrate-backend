@@ -22,7 +22,8 @@ $router->group([
     'prefix' => 'api',
 ], function (\Laravel\Lumen\Routing\Router $router) {
     // Contacts
-    $router->post('/contacts', ['uses' => 'ContactController@updateContacts']);
+    $router->post('/contacts', ['uses' => 'ContactController@syncContacts']);
+    $router->get('/contacts', ['uses' => 'ContactController@getContacts']);
 
     // Skills
     $router->get('/skills', ['uses' => 'SkillController@index']);
