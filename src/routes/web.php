@@ -17,6 +17,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/documentation', fn() => view('swagger'));
+
 $router->group([
     'middleware' => ['auth'],
     'prefix' => 'api',
