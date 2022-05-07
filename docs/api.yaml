@@ -1,0 +1,123 @@
+swagger: "2.0"
+info:
+  description: "В документации описаны методы API для Humanrating App"
+  version: "1.0.0"
+  title: "Humanrate API"
+  contact:
+    email: "arthur.ragimov@gmail.com"
+host: "localhost"
+basePath: "/api"
+tags:
+  - name: "contacts"
+    description: "Контактная информация"
+  - name: "skills"
+    description: "Навыки"
+schemes:
+  - "http"
+paths:
+  /contacts:
+    post:
+      tags:
+        - "contacts"
+      summary: "Синхронизация контактов"
+      operationId: "syncContacts"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: '#/parameters/User-Identify'
+        - in: "body"
+          name: "body"
+          description: "Список контактов которые нужно обновить в БД"
+          required: true
+          schema:
+            $ref: '#/definitions/SyncContactList'
+      responses:
+        "200":
+          description: "OK"
+        "401":
+          $ref: '#/responses/Unauthorized'
+        "422":
+          $ref: '#/responses/UnprocessableEntity'
+    get:
+      tags:
+        - "contacts"
+      summary: "Получение списка контактов"
+      operationId: "getContacts"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: '#/definitions/ContactList'
+        "402":
+          $ref: '#/responses/Unauthorized'
+
+
+
+definitions:
+  Contact:
+    type: object
+    properties:
+      phone:
+        type: string
+      name:
+        type: string
+  SyncContactList:
+    type: object
+    properties:
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/Contact'
+
+  ContactList:
+    type: object
+    properties:
+      contacts:
+        type: array
+        items:
+          allOf:
+            - type: object
+              properties:
+                user_id:
+                  type: integer
+                created_at:
+                  type: string
+                updated_at:
+                  type: string
+            - $ref: '#/definitions/Contact'
+    example:
+      contacts:
+        - phone: "+34543345343"
+          name: "Ivan Ivanov"
+          user_id: 34234
+          created_at: "2022-05-07T16:54:54.000000Z"
+          updated_at: "2022-05-07T16:54:54.000000Z"
+
+parameters:
+  User-Identify:
+    name: User-Identify
+    in: header
+    type: string
+    required: true
+    description: Номер телефона пользователя для авторизации
+
+responses:
+  Unauthorized:
+    description: Unauthorized
+  UnprocessableEntity:
+    description: Unprocessable entity
+    schema:
+      type: object
+      properties:
+        contacts:
+          type: array
+          items:
+            type: string
+            example: The contacts field is required.
+
