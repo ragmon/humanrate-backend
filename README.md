@@ -61,7 +61,7 @@
 ## Полезные команды
 
 ### Засеить БД тестовыми данными
-> docker-compose exec -u 1000 app php artisan db:seed
+> docker-compose exec -u 1000 workspace php artisan db:seed
 
 ## Запустить тесты
-> docker-compose exec -u 1000 app php vendor/bin/phpunit
+> docker-compose exec -u 1000 workspace php ./vendor/bin/phpunit
