@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int id
+ * @property string name
+ * @property string phone
+ *
+ * @method withPhone($phone, $token)
+ */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
@@ -50,6 +57,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function scopeWithPhone(Builder $query, string $phone): Builder
     {
-        return $this->where('phone', $phone);
+        return $query->where('phone', $phone);
     }
 }
