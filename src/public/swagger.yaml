@@ -57,6 +57,23 @@ paths:
         "402":
           $ref: '#/responses/Unauthorized'
 
+  /skills:
+    get:
+      tags:
+        - "skills"
+      summary: "Получение списка навыков"
+      operationId: "index"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: '#/definitions/SkillList'
+        "402":
+          $ref: '#/responses/Unauthorized'
 
 
 definitions:
@@ -74,7 +91,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Contact'
-
   ContactList:
     type: object
     properties:
@@ -98,6 +114,21 @@ definitions:
           user_id: 34234
           created_at: "2022-05-07T16:54:54.000000Z"
           updated_at: "2022-05-07T16:54:54.000000Z"
+  SkillList:
+    type: array
+    items:
+      $ref: '#/definitions/Skill'
+  Skill:
+    type: object
+    properties:
+      user_id:
+        type: integer
+      name:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
 
 parameters:
   User-Identify:

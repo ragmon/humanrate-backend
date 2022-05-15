@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string name
  * @property string phone
  *
- * @method withPhone($phone, $token)
+ * @method withPhone($phone)
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
