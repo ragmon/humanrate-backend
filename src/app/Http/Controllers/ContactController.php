@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
@@ -39,7 +40,7 @@ class ContactController extends Controller
         foreach ($contacts as $contact) {
             /** @var  $contactEntity */
             if ($contactEntity = $user->contacts()->where('phone', $contact['phone'])->first()) {
-                $contactEntity->update($contact->only(['name']));
+                $contactEntity->update(Arr::only($contact, ['name']));
             } else {
                 $user->contacts()->create($contact);
             }
