@@ -1,53 +1,17 @@
 # Human rating (API)
 
-## Установка (автоматическая)
-1. Выполнить скрипт
+## Установка
+
 ```
-./install-all.bash
+git submodule update --init --recursive
+cp laradock.env laradock/.env
+docker-compose -f ./laradock/docker-compose.yml up -d nginx mysql
+cp .env.example .env
+cp ./src/.env.example ./src/.env
+docker-compose -f ./laradock/docker-compose.yml exec -u laradock workspace composer install
+docker-compose -f ./laradock/docker-compose.yml exec -u laradock workspace php artisan migrate:refresh
+docker-compose -f ./laradock/docker-compose.yml exec -u laradock workspace php ./vendor/bin/phpunit
 ```
-
-[//]: # (## Установка &#40;ручная&#41;)
-
-[//]: # ()
-[//]: # (1. Установить git submodule)
-
-[//]: # (```)
-
-[//]: # (git submodule update --init --recursive)
-
-[//]: # (cp laradock.env laradock/.env)
-
-[//]: # (```)
-
-[//]: # (2. Развернуть docker среду &#40;среда будет собираться долго. нужно набраться терпения&#41;)
-
-[//]: # (```)
-
-[//]: # (cd laradock)
-
-[//]: # (cp .env.example .env)
-
-[//]: # (sudo ./up.bash)
-
-[//]: # ()
-[//]: # (# установить зависимости)
-
-[//]: # (sudo ./composer-install.bash)
-
-[//]: # (# развернуть БД миграции  )
-
-[//]: # (sudo ./migrate.bash)
-
-[//]: # (```)
-
-[//]: # (3. Перейти на http://localhost и увидеть `Lumen &#40;9.0.2&#41; &#40;Laravel Components ^9.0&#41;`)
-
-## Использование
-
-1. Перейти http://localhost/ или http://127.0.0.1/ <br>
-    Должно показать сообщение `Lumen (9.0.2) (Laravel Components ^9.0)`. 
-   Значит проект успешно развернут.
-2. Можно отправлять HTTP запросы на endpoint: http://localhost/api
 
 ## Справка
 
