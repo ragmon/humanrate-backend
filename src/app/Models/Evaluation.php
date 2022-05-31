@@ -10,7 +10,7 @@ class Evaluation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['value'];
+//    protected $fillable = ['value'];
 
     public function user(): BelongsTo
     {

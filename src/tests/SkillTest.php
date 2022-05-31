@@ -86,7 +86,7 @@ class SkillTest extends TestCase
         ]);
         $evaluation = Evaluation::factory()->make();
 
-        $response = $this->json('POST', '/api/skills/evaluation/' . $skill->id, $evaluation->toArray(), [
+        $response = $this->json('POST', "/api/skills/{$skill->id}/evaluation", $evaluation->toArray(), [
             'User-Identify' => $user->phone,
         ]);
 

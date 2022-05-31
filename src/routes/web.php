@@ -31,6 +31,8 @@ $router->group([
     $router->get('/skills', ['uses' => 'SkillController@index']);
     $router->post('/skills', ['uses' => 'SkillController@store']);
     $router->delete('/skills/{skillId}', ['uses' => 'SkillController@delete']);
-    $router->post('/skills/evaluation/{skillId}', ['uses' => 'SkillController@evaluation']);
+
+    // Evaluations
+    $router->get('/user/{userId}/evaluations', ['uses' => 'EvaluationController@index']);
+    $router->post('/skills/{skillId}/evaluation', ['uses' => 'EvaluationController@evaluation']);
 });
-$router->get('/skills', ['uses' => 'SkillController@index']);
